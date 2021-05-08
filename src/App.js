@@ -1,25 +1,44 @@
-import logo from './logo.svg';
+import Header from './components/Header';
+import FormDialog from "./components/FormDialog";
+import Deck  from "./components/Deck";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import DeckGrid from "./components/DeckGrid";
 import './App.css';
 
+
+
 function App() {
+
+  const [decks, setDecks] = useState([])
+ 
+
+  useEffect(() => {
+    const fetchDecks = async () => {
+      const result = await axios('./decks')
+      console.log(result.data)
+      setDecks(result.data)
+    }
+      fetchDecks()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Header />
+        <DeckGrid decks={decks}/>
+        <FormDialog />
+
+
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
