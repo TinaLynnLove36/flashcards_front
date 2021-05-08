@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,10 +17,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [title, setTitle] = useState('');
   const [open, setOpen] = useState(false);
-    const classes = useStyles();
+  const ref = useRef();
+  const classes = useStyles();
   const handleClickOpen = () => {
     setOpen(true)
   };
@@ -29,12 +30,17 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  const handleClick = useCallback(() => {
+    ref.current.value = "";
+  }, []);
+
   const handleSubmit = (e) => {
+    setOpen(false);
     const newDeckTitle = { title };
-    console.log(newDeckTitle);
+      console.log(newDeckTitle);
   }
  
- 
+
   return (
    
     <div className={classes.fab}>
@@ -52,17 +58,17 @@ export default function FormDialog() {
             margin="dense"
             label="Title"
             type="text"
-            value={title}
+            inputRef={ref}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary" type="submit" onClick= {handleSubmit}>
-            Add 
+          <Button onClick={handleClose} color="primary">
+            Cancel
           </Button>
-           <Button onClick={handleClose} color="primary">
-            Close
+        <Button color="primary" type="submit" onClick= {handleSubmit}>
+            Add 
           </Button>
         </DialogActions>
       </Dialog>
