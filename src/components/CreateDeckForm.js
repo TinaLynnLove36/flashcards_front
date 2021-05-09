@@ -6,8 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Fab, makeStyles } from '@material-ui/core';
+import { Fab, makeStyles} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     fab: {
@@ -17,14 +18,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function FormDialog(props) {
-  const [title, setTitle] = useState('');
+export default function CreateDeckForm(props) {
+ const [deckTitle, setDeckTitle] = useState({
+   title: ''
+ })
   const [open, setOpen] = useState(false);
   const ref = useRef();
   const classes = useStyles();
   const handleClickOpen = () => {
     setOpen(true)
   };
+
 
   const handleClose = () => {
     setOpen(false);
@@ -34,12 +38,19 @@ export default function FormDialog(props) {
     ref.current.value = "";
   }, []);
 
-  const handleSubmit = (e) => {
-    setOpen(false);
-    const newDeckTitle = { title };
-      console.log(newDeckTitle);
+    const newDeckTitle = () => {
+    setDeckTitle('')
   }
- 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post(`./decks`)
+    .then(res => {
+      console.log(res);
+      console.log(res.data)
+    })
+    setOpen(false);
+  }
 
   return (
    
@@ -59,7 +70,7 @@ export default function FormDialog(props) {
             label="Title"
             type="text"
             inputRef={ref}
-            onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setDeckTitle(e.target.value)}
             fullWidth
           />
         </DialogContent>

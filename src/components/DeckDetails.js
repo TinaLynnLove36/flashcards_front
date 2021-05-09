@@ -8,10 +8,8 @@ const DeckDetails = ({ deck }) => {
 return (
    <button className='cardButtons' onClick={hello}>
     <div className='card'>
-    
       <div className='card-inner'>
         <div className='card-front'>
-
           <h1>{deck.title}</h1>
         </div>
       </div>

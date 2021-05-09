@@ -1,10 +1,12 @@
 import Header from './components/Header';
-import FormDialog from "./components/FormDialog";
+import CreateDeckForm from "./components/CreateDeckForm";
 import Deck  from "./components/Deck";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DeckGrid from "./components/DeckGrid";
 import './App.css';
+import NewDeck from './components/NewDeck';
+import DeckList from './components/DeckList';
 
 
 
@@ -25,8 +27,13 @@ function App() {
   return (
     <div className="App">
         <Header />
-        <DeckGrid decks={decks}/>
-        <FormDialog />
+        <DeckList />
+        <NewDeck />
+   
+      
+      
+
+        
 
 
     </div>
@@ -34,7 +41,11 @@ function App() {
 }
 
 export default App;
-
+//        <CreateDeckForm />
+//  <DeckGrid decks={decks}/>
+ // <NewDeck />
+    //  <DeckGrid decks={decks}/>
+       //  <CreateDeckForm />
 
 
 
